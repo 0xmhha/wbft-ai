@@ -7,9 +7,9 @@ When installed into the go-wbft project root, Claude Code gains accurate underst
 ## What This Provides
 
 - **Project Context** (`CLAUDE.md`) — Project overview, hardfork chain, and go-wbft-specific code map
-- **Code Review Command** (`.claude/commands/wbft-review-code.md`) — `/wbft-review-code` slash command for structured code analysis, call-flow tracing, and impact assessment
+- **Code Review Command** (`.claude/commands/wbft-review-code.md`) — `/wbft-review-code` slash command with inline question-type classifier, keyword→doc index, and structured analysis workflow
 - **Build Reference** (`.claude/docs/build-source-files.md`) — Complete list of 165 packages and 791 Go files in the binary build
-- **Review Guide** (`.claude/docs/review-guide.md`) — Question-type exploration guide and go-wbft unique code map
+- **Review Guide** (`.claude/docs/review-guide.md`) — go-wbft unique code map and detailed flow diagrams (loaded on demand)
 - **Dev Guide** (`.claude/docs/dev-basics.md`) — Build system, architecture, interfaces, tests, linting
 - **WBFT Consensus** (`.claude/docs/wbft-consensus.md`) — State machine, WBFTExtra, RPC API, P2P, Epoch/Validator management
 - **WBFT Features** (`.claude/docs/wbft-features.md`) — Governance contracts, hardforks, Fee Delegation, Brioche halving
@@ -106,7 +106,7 @@ go-wbft/
     ├── commands/
     │   └── wbft-review-code.md            # Code review slash command
     └── docs/
-        ├── review-guide.md                # Question-type guide + go-wbft code map
+        ├── review-guide.md                # go-wbft code map + detailed flow diagrams (on-demand)
         ├── dev-basics.md                  # Build, architecture, interfaces, tests
         ├── wbft-consensus.md              # WBFT consensus internals
         ├── wbft-features.md               # go-wbft unique features
@@ -139,7 +139,7 @@ Or run locally:
 2. **Build-based** — References only the 165 packages/791 files from `go list -deps`
 3. **geth-distinct** — Clearly separates go-wbft unique code from geth origin
 4. **Terminology-accurate** — `wemixgov` not `systemcontracts`, `gwemix` not `gstable`
-5. **Index-driven** — Keyword → file → heading lookup table in the command file
+5. **Index-driven** — Inline question classifier + keyword → file → heading lookup; references load only when needed
 
 ## License
 
