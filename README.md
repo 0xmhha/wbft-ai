@@ -1,8 +1,23 @@
 # wbft-ai — go-wbft Claude Code Plugin
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-blueviolet)](https://docs.anthropic.com/en/docs/claude-code/overview)
+
 Claude Code configuration package for the [go-wbft](https://github.com/wemixarchive/go-wbft) blockchain client.
 
 When installed into the go-wbft project root, Claude Code gains accurate understanding of the codebase — distinguishing WBFT consensus from geth, wemixgov from systemcontracts, and referencing only the 165 packages/791 files that are actually included in the build.
+
+## Table of Contents
+
+- [What This Provides](#what-this-provides)
+- [Installation](#installation)
+- [Usage](#usage)
+- [File Structure After Installation](#file-structure-after-installation)
+- [Uninstall](#uninstall)
+- [Prerequisites](#prerequisites)
+- [Design Principles](#design-principles)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## What This Provides
 
@@ -140,6 +155,10 @@ Or run locally:
 3. **geth-distinct** — Clearly separates go-wbft unique code from geth origin
 4. **Terminology-accurate** — `wemixgov` not `systemcontracts`, `gwemix` not `gstable`
 5. **Index-driven** — Inline question classifier + keyword → file → heading lookup; references load only when needed
+
+## Contributing
+
+Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on reporting issues, submitting pull requests, and updating documentation.
 
 ## License
 
