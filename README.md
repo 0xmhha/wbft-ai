@@ -1,72 +1,132 @@
-# wbft-ai — go-wbft Claude Code 플러그인
+# wbft-ai — go-wbft Claude Code Plugin
 
-go-wbft 프로젝트를 위한 Claude Code 커맨드 및 문서 셋.
+Claude Code configuration package for the [go-wbft](https://github.com/wemixarchive/go-wbft) blockchain client.
 
-LLM이 go-wbft 코드를 정확히 이해하고 분석할 수 있도록, 빌드에 참여하는 실제 코드만을 기반으로 정리된 참조 문서를 제공한다.
+When installed into the go-wbft project root, Claude Code gains accurate understanding of the codebase — distinguishing WBFT consensus from geth, wemixgov from systemcontracts, and referencing only the 165 packages/791 files that are actually included in the build.
 
-## 설치
+## What This Provides
 
-### 로컬 설치
+- **Project Context** (`CLAUDE.md`) — Project overview, hardfork chain, and go-wbft-specific code map
+- **Code Review Command** (`.claude/commands/wbft-review-code.md`) — `/wbft-review-code` slash command for structured code analysis, call-flow tracing, and impact assessment
+- **Build Reference** (`.claude/docs/build-source-files.md`) — Complete list of 165 packages and 791 Go files in the binary build
+- **Review Guide** (`.claude/docs/review-guide.md`) — Question-type exploration guide and go-wbft unique code map
+- **Dev Guide** (`.claude/docs/dev-basics.md`) — Build system, architecture, interfaces, tests, linting
+- **WBFT Consensus** (`.claude/docs/wbft-consensus.md`) — State machine, WBFTExtra, RPC API, P2P, Epoch/Validator management
+- **WBFT Features** (`.claude/docs/wbft-features.md`) — Governance contracts, hardforks, Fee Delegation, Brioche halving
+- **Governance Flow** (`.claude/docs/governance-flow.md`) — wemixgov contract deployment and upgrade flow
+- **Code Convention** (`.claude/docs/code-convention.md`) — Go and Solidity naming, formatting, commit messages
+- **Ops Guide** (`.claude/docs/ops-guide.md`) — Genesis generation, key parameters, checklist
+
+## Installation
+
+> **Must be run from the go-wbft project root.**
+
+### Method 1: One-liner (Recommended)
 
 ```bash
+curl -fsSL https://raw.githubusercontent.com/0xmhha/wbft-ai/main/install.sh | bash
+```
+
+Or specify the project path explicitly:
+
+```bash
+GO_WBFT_DIR=/path/to/go-wbft \
+  curl -fsSL https://raw.githubusercontent.com/0xmhha/wbft-ai/main/install.sh | bash
+```
+
+### Method 2: Git Clone + Local Install
+
+```bash
+git clone https://github.com/0xmhha/wbft-ai.git
 cd wbft-ai
-chmod +x install-local.sh
 ./install-local.sh /path/to/go-wbft
 ```
 
-### 수동 설치
+### Method 3: Manual Install
 
-1. `CLAUDE.md` → go-wbft 프로젝트 루트에 복사
-2. `.claude/` → go-wbft 프로젝트 루트에 복사
+```bash
+cd /path/to/go-wbft
+mkdir -p .claude/commands .claude/docs
 
-## 제거
+BASE=https://raw.githubusercontent.com/0xmhha/wbft-ai/main
+
+curl -fsSL $BASE/CLAUDE.md -o CLAUDE.md
+curl -fsSL $BASE/.claude/commands/wbft-review-code.md -o .claude/commands/wbft-review-code.md
+for doc in review-guide dev-basics wbft-consensus wbft-features governance-flow build-source-files code-convention ops-guide; do
+  curl -fsSL $BASE/.claude/docs/${doc}.md -o .claude/docs/${doc}.md
+done
+```
+
+## Usage
+
+```bash
+cd /path/to/go-wbft
+claude
+```
+
+### Code Review Command
+
+```
+/wbft-review-code handleCommitMsg 함수의 동작을 설명해줘
+/wbft-review-code WBFTExtra 구조체의 각 필드 역할은?
+/wbft-review-code 거버넌스 컨트랙트 배포 흐름을 분석해줘
+/wbft-review-code Croissant 하드포크에서 변경된 내용은?
+```
+
+The command supports:
+- Function/type explanations
+- Call-flow tracing
+- Impact analysis for modifications
+- WBFT consensus flow analysis
+- Governance (wemixgov) contract architecture
+- Transaction/EVM execution paths
+- Genesis/chain configuration
+- Hardfork and upgrade paths
+
+## File Structure After Installation
+
+```
+go-wbft/
+├── CLAUDE.md                              # Project context for Claude Code
+└── .claude/
+    ├── commands/
+    │   └── wbft-review-code.md            # Code review slash command
+    └── docs/
+        ├── review-guide.md                # Question-type guide + go-wbft code map
+        ├── dev-basics.md                  # Build, architecture, interfaces, tests
+        ├── wbft-consensus.md              # WBFT consensus internals
+        ├── wbft-features.md               # go-wbft unique features
+        ├── governance-flow.md             # Governance contract flow
+        ├── build-source-files.md          # Build target listing (165 pkg / 791 files)
+        ├── code-convention.md             # Go & Solidity conventions
+        └── ops-guide.md                   # Genesis generation & key parameters
+```
+
+## Uninstall
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/0xmhha/wbft-ai/main/uninstall.sh | bash
+```
+
+Or run locally:
 
 ```bash
 ./uninstall.sh /path/to/go-wbft
 ```
 
-## 사용법
+## Prerequisites
 
-```bash
-cd /path/to/go-wbft
-claude                           # Claude Code 실행
-/wbft-review-code [질문]          # 코드 분석 커맨드
-```
+- [Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) installed
+- [go-wbft](https://github.com/wemixarchive/go-wbft) project cloned locally
 
-## 파일 구조
+## Design Principles
 
-```
-wbft-ai/
-├── README.md                              # 이 파일
-├── CLAUDE.md                              # 프로젝트 컨텍스트 (go-wbft 루트에 설치)
-├── install-local.sh                       # 로컬 설치 스크립트
-├── uninstall.sh                           # 제거 스크립트
-└── .claude/
-    ├── settings.local.json                # 권한 설정
-    ├── commands/
-    │   └── wbft-review-code.md            # 코드 분석 슬래시 커맨드
-    └── docs/
-        ├── review-guide.md                # 질문 유형별 탐색 가이드 + go-wbft 코드 맵
-        ├── dev-basics.md                  # 빌드, 아키텍처, 인터페이스, 테스트, 린팅
-        ├── wbft-consensus.md              # WBFT 합의 엔진 (상태머신, Extra, RPC, P2P, Epoch)
-        ├── wbft-features.md               # go-wbft 고유 기능 (거버넌스, 하드포크, Fee Delegation, Halving)
-        ├── governance-flow.md             # 거버넌스 컨트랙트 배포/업그레이드 흐름
-        ├── build-source-files.md          # 빌드 참여 파일 목록 (165 패키지, 791 파일)
-        ├── code-convention.md             # Go & Solidity 코드 컨벤션
-        └── ops-guide.md                   # 제네시스 생성, 설정값, 주의사항
-```
+1. **Token-efficient** — Docs split by topic; only relevant sections are loaded
+2. **Build-based** — References only the 165 packages/791 files from `go list -deps`
+3. **geth-distinct** — Clearly separates go-wbft unique code from geth origin
+4. **Terminology-accurate** — `wemixgov` not `systemcontracts`, `gwemix` not `gstable`
+5. **Index-driven** — Keyword → file → heading lookup table in the command file
 
-## 문서 설계 원칙
+## License
 
-1. **토큰 효율성**: 문서를 주제별로 분할하여, 필요한 섹션만 로드
-2. **빌드 기반**: `go list -deps`로 추출한 실제 빌드 참여 코드만 참조
-3. **geth 구분**: go-wbft 고유 코드와 geth 원본 코드를 명확히 구분
-4. **용어 정확성**: `systemcontracts` 대신 `wemixgov`, `gstable` 대신 `gwemix`
-5. **인덱스 기반**: 커맨드에 문서 인덱스 테이블을 포함하여 키워드 기반 탐색
-
-## 대상 프로젝트
-
-- **go-wbft**: go-wemix(PoA)에서 WBFT(DPoS+BFT) 합의로 전환하는 하드포크 프로젝트
-- **합의**: WBFT — QBFT 기반 BFT 합의, 스테이킹 기반 밸리데이터 선택
-- **거버넌스**: wemixgov — GovConfig, GovStaking, GovRewardee, GovNCP 컨트랙트
-- **하드포크**: Croissant — WBFT 합의가 활성화되는 하드포크
+MIT

@@ -1,15 +1,11 @@
 #!/bin/bash
 # go-wbft Claude Code 플러그인 제거 스크립트
-# 사용법: ./uninstall.sh /path/to/go-wbft
+# 사용법 (curl): curl -fsSL https://raw.githubusercontent.com/0xmhha/wbft-ai/main/uninstall.sh | bash
+# 사용법 (로컬): ./uninstall.sh /path/to/go-wbft
 
 set -e
 
-TARGET_DIR="${1:-${GO_WBFT_DIR:-}}"
-
-if [ -z "$TARGET_DIR" ]; then
-    echo "사용법: $0 /path/to/go-wbft"
-    exit 1
-fi
+TARGET_DIR="${1:-${GO_WBFT_DIR:-$(pwd)}}"
 
 echo "=== go-wbft Claude Code 플러그인 제거 ==="
 
