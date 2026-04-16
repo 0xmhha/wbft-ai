@@ -1,6 +1,8 @@
 #!/bin/bash
-# go-wbft Claude Code 플러그인 제거 스크립트
-# 사용법 (curl): curl -fsSL https://raw.githubusercontent.com/0xmhha/wbft-ai/main/uninstall.sh | bash
+# go-wbft Claude Code 플러그인 제거 스크립트 (private repo — GitHub 인증 필요)
+#
+# 사용법 (curl):  curl -fsSL -H "Authorization: token $(gh auth token)" \
+#                   https://raw.githubusercontent.com/0xmhha/wbft-ai/main/uninstall.sh | bash
 # 사용법 (로컬): ./uninstall.sh /path/to/go-wbft
 
 set -e

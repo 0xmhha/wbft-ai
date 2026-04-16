@@ -20,19 +20,31 @@ When installed into the go-wbft project root, Claude Code gains accurate underst
 ## Installation
 
 > **Must be run from the go-wbft project root.**
+>
+> This is a private repository. [GitHub CLI](https://cli.github.com/) (`gh`) login is required.
 
 ### Method 1: One-liner (Recommended)
 
+Run from the **go-wbft project root** (requires `gh auth login`):
+
 ```bash
-curl -fsSL https://raw.githubusercontent.com/0xmhha/wbft-ai/main/install.sh | bash
+curl -fsSL -H "Authorization: token $(gh auth token)" \
+  https://raw.githubusercontent.com/0xmhha/wbft-ai/main/install.sh | bash
 ```
 
 Or specify the project path explicitly:
 
 ```bash
 GO_WBFT_DIR=/path/to/go-wbft \
-  curl -fsSL https://raw.githubusercontent.com/0xmhha/wbft-ai/main/install.sh | bash
+  curl -fsSL -H "Authorization: token $(gh auth token)" \
+  https://raw.githubusercontent.com/0xmhha/wbft-ai/main/install.sh | bash
 ```
+
+> **Note:** The install script auto-detects the `gh` CLI token. You can also set `GITHUB_TOKEN` explicitly:
+> ```bash
+> GITHUB_TOKEN=ghp_xxx curl -fsSL -H "Authorization: token $GITHUB_TOKEN" \
+>   https://raw.githubusercontent.com/0xmhha/wbft-ai/main/install.sh | bash
+> ```
 
 ### Method 2: Git Clone + Local Install
 
@@ -48,12 +60,14 @@ cd wbft-ai
 cd /path/to/go-wbft
 mkdir -p .claude/commands .claude/docs
 
+TOKEN=$(gh auth token)
 BASE=https://raw.githubusercontent.com/0xmhha/wbft-ai/main
+AUTH="-H \"Authorization: token $TOKEN\""
 
-curl -fsSL $BASE/CLAUDE.md -o CLAUDE.md
-curl -fsSL $BASE/.claude/commands/wbft-review-code.md -o .claude/commands/wbft-review-code.md
+curl -fsSL $AUTH $BASE/CLAUDE.md -o CLAUDE.md
+curl -fsSL $AUTH $BASE/.claude/commands/wbft-review-code.md -o .claude/commands/wbft-review-code.md
 for doc in review-guide dev-basics wbft-consensus wbft-features governance-flow build-source-files code-convention ops-guide; do
-  curl -fsSL $BASE/.claude/docs/${doc}.md -o .claude/docs/${doc}.md
+  curl -fsSL $AUTH $BASE/.claude/docs/${doc}.md -o .claude/docs/${doc}.md
 done
 ```
 
