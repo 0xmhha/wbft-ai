@@ -1,11 +1,13 @@
 {
   "permissions": {
     "allow": [
+      "Bash(solc --version)",
+      "Bash(go run:*)",
+      "Bash(go build:*)",
+      "Bash(go test:*)",
       "Bash(python3:*)",
       "WebSearch",
-      "Bash(gh pr:*)",
-      "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git *)"
     ]
   }
 }

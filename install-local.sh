@@ -38,6 +38,7 @@ fi
 # 디렉토리 생성
 mkdir -p "$TARGET_DIR/.claude/commands"
 mkdir -p "$TARGET_DIR/.claude/docs"
+mkdir -p "$TARGET_DIR/.claude/skills/wbft-system-contract-workflow/references"
 
 # 파일 복사
 echo "파일 복사 중..."
@@ -53,6 +54,14 @@ for doc in review-guide.md dev-basics.md wbft-consensus.md wbft-features.md gove
     cp "$SCRIPT_DIR/.claude/docs/$doc" "$TARGET_DIR/.claude/docs/$doc"
 done
 
+# 스킬: wbft-system-contract-workflow
+cp "$SCRIPT_DIR/.claude/skills/wbft-system-contract-workflow/SKILL.md" \
+   "$TARGET_DIR/.claude/skills/wbft-system-contract-workflow/SKILL.md"
+for ref in 01-solidity-source.md 02-build-compile.md 03-go-bindings.md 04-core-integration.md 05-hardfork-recipe.md 06-gotchas.md; do
+    cp "$SCRIPT_DIR/.claude/skills/wbft-system-contract-workflow/references/$ref" \
+       "$TARGET_DIR/.claude/skills/wbft-system-contract-workflow/references/$ref"
+done
+
 echo ""
 echo "=== 설치 완료 ==="
 echo ""
@@ -61,6 +70,7 @@ echo "  $TARGET_DIR/CLAUDE.md"
 echo "  $TARGET_DIR/.claude/settings.local.json"
 echo "  $TARGET_DIR/.claude/commands/wbft-review-code.md"
 echo "  $TARGET_DIR/.claude/docs/ (8개 문서)"
+echo "  $TARGET_DIR/.claude/skills/wbft-system-contract-workflow/ (SKILL.md + references 6개)"
 echo ""
 echo "사용법:"
 echo "  cd $TARGET_DIR"

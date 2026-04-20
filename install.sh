@@ -75,6 +75,7 @@ fi
 # 디렉토리 생성
 mkdir -p "$TARGET_DIR/.claude/commands"
 mkdir -p "$TARGET_DIR/.claude/docs"
+mkdir -p "$TARGET_DIR/.claude/skills/wbft-system-contract-workflow/references"
 
 # 파일 다운로드 함수 (GitHub 인증 헤더 포함)
 download() {
@@ -97,6 +98,12 @@ for doc in review-guide.md dev-basics.md wbft-consensus.md wbft-features.md gove
     download ".claude/docs/${doc}" ".claude/docs/${doc}"
 done
 
+# 스킬: wbft-system-contract-workflow
+download ".claude/skills/wbft-system-contract-workflow/SKILL.md" ".claude/skills/wbft-system-contract-workflow/SKILL.md"
+for ref in 01-solidity-source.md 02-build-compile.md 03-go-bindings.md 04-core-integration.md 05-hardfork-recipe.md 06-gotchas.md; do
+    download ".claude/skills/wbft-system-contract-workflow/references/${ref}" ".claude/skills/wbft-system-contract-workflow/references/${ref}"
+done
+
 echo ""
 echo -e "${GREEN}=== 설치 완료 ===${NC}"
 echo ""
@@ -104,6 +111,7 @@ echo "설치된 파일:"
 echo "  CLAUDE.md"
 echo "  .claude/commands/wbft-review-code.md"
 echo "  .claude/docs/ (8개 문서)"
+echo "  .claude/skills/wbft-system-contract-workflow/ (SKILL.md + references 6개)"
 echo ""
 echo "사용법:"
 echo "  cd $TARGET_DIR"
