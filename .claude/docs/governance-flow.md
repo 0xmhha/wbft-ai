@@ -1,6 +1,8 @@
 # 거버넌스 컨트랙트 배포/업그레이드 흐름 (§1-§6)
 
 > wemixgov 거버넌스 컨트랙트의 배포, 버저닝, 업그레이드 상세 흐름.
+>
+> **수정 작업이면 skill을 우선 사용**: 컨트랙트 추가·수정·삭제, 새 버전 도입, 새 하드포크에서의 업그레이드 같은 **system contract 변경 작업**은 `wbft-system-contract-workflow` skill의 레이어별(L1~L6) 절차를 따른다. 본 문서는 **흐름 이해와 조회용 레퍼런스**이며, 실제 수정 시 단일 수렴점(`GetGovContractsTransition`) 누락·스토리지 레이아웃 파손 같은 실수가 반복되기 쉬우므로 skill의 불변식 체크리스트를 우회하지 않는다.
 
 ---
 
@@ -184,6 +186,8 @@ func checkGovContractVersions(govContracts *params.GovContracts) error {
 ---
 
 ## 5. 새 하드포크 추가
+
+> **실제 구현 시**: `wbft-system-contract-workflow` skill의 `references/05-hardfork-recipe.md`(End-to-End 8단계 레시피)를 따른다. 본 섹션은 흐름 이해를 돕는 요약이며, skill 쪽이 최신 체크리스트·불변식·테스트 가이드를 포함한다.
 
 거버넌스 컨트랙트 업그레이드가 포함된 새 하드포크를 추가하는 단계:
 

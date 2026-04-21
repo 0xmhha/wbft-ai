@@ -8,6 +8,8 @@
 
 go-wbft의 거버넌스는 `wemixgov/` 패키지를 통해 구현된다. go-stablenet의 `systemcontracts/`에 해당하는 역할.
 
+> **system contract 추가·수정·삭제 작업이면** `wbft-system-contract-workflow` skill을 로드한다 — Solidity → 바이트코드 빌드 → Go 바인딩 → 체인 설정 → core/consensus 통합까지 6개 레이어의 변경을 빠짐없이 수행할 수 있도록 절차와 불변식을 안내한다.
+
 ### 컨트랙트 목록
 
 | 이름 | 기본 주소 | 역할 |

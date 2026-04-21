@@ -118,6 +118,8 @@ Core.Start() → handleEvents() 루프
 
 ### 유형 5: 거버넌스 (wemixgov) 질문
 
+> **system contract(GovConfig/GovStaking/GovRewardeeImp/GovNCP) 추가·수정·삭제 작업이면** `wbft-system-contract-workflow` skill을 먼저 로드한다. 본 섹션은 구조 조회용이며, 실제 수정은 skill의 레이어별(L1~L6) 체크리스트와 불변식을 따라야 합의 불일치를 방지할 수 있다. 단순 조회/이해 목적이면 skill 없이 아래 구조도로 충분하다.
+
 ```
 wemixgov/ 패키지 구조:
   ├─ govapi.go                  — GovContractApi, GovBackend 인터페이스
@@ -160,6 +162,19 @@ wemixgov/ 패키지 구조:
 3. 패키지 간 관계는 `Grep`으로 import 관계를 추적한다
 
 ### 유형 10: 코드 수정 / 기능 추가 요청
+
+**도메인 특화 skill이 있으면 먼저 로드한다** — 도메인마다 실수가 다른 유형으로 발생하므로 skill이 제공하는 불변식/체크리스트를 우회하지 말 것.
+
+| 도메인 | Skill | 상태 |
+|---|---|---|
+| system contract 수정 (wemixgov 거버넌스 컨트랙트) | `wbft-system-contract-workflow` | ✅ 제공됨 |
+| mempool / tx pool 수정 | `wbft-mempool-workflow` (가칭) | 예정 |
+| 합의(BFT 라운드/메시지) 수정 | `wbft-consensus-workflow` (가칭) | 예정 |
+| hardfork 분기 로직 추가 | `wbft-hardfork-workflow` (가칭) | 예정 |
+| 체인 configuration 확장 | `wbft-configuration-workflow` (가칭) | 예정 |
+| EVM / precompile 수정 | `wbft-evm-workflow` (가칭) | 예정 |
+
+해당 skill이 없는 도메인이면 아래 일반 절차를 따른다:
 
 1. 유사한 기존 구현을 먼저 찾는다 (패턴 참고)
 2. 수정 대상 파일과 영향 범위를 파악한다
